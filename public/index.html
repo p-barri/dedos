@@ -9,11 +9,11 @@
     <div class="login page" id="loginInput">
         <div class="form">
             <h3 class="title">What's your nickname?</h3>
-            <input id="usernameInput" type="text" maxlength="14" />
+            <input id="usernameInput" type="text" maxlength="14"/>
         </div>
         <div class="form">
             <h3 class="title">What's your gamename?</h3>
-            <input id="gamenameInput" type="text" maxlength="14" />
+            <input id="gamenameInput" type="text" maxlength="14"/>
         </div>
         <div>
             <button onclick="setUsername();">Send</button>
@@ -22,11 +22,11 @@
     <div class="login page" id="joinInput">
         <div class="form">
             <h3 class="title">What's your nickname?</h3>
-            <input id="usernameJoinInput" type="text" maxlength="14" />
+            <input id="usernameJoinInput" type="text" maxlength="14"/>
         </div>
         <div class="form">
             <h3 class="title">What's your gameId?</h3>
-            <input id="gameidInput" type="text" maxlength="14" />
+            <input id="gameidInput" type="text" maxlength="14"/>
         </div>
         <div>
             <button onclick="joinGame();">Join game</button>
@@ -34,15 +34,21 @@
     </div>
     <div style="display: none;" id="userBlock">
         <img src="images/Recurso%202.png" alt="Smiley face" height="100%" width="42">
-        <h2 >
-            <span id="usernameLogged"></span> 
+        <h2>
+            <span id="usernameLogged"></span>
             <span id="gameName"></span>
         </h2>
         Codigo: <span id="gameId"></span>
         <div>
             <table id="users">
-                
+
             </table>
+        </div>
+        <div>
+            <div class="form">
+                <h3 class="title">numberInput?</h3>
+                <input id="numberInput" type="text" maxlength="14"/>
+            </div>
         </div>
     </div>
     <p>
@@ -53,7 +59,7 @@
     <div class="chat">
         <ul id="messages"></ul>
         <form action="">
-            <input id="m" autocomplete="off" />
+            <input id="m" autocomplete="off"/>
             <button disabled id="chat-send">Send</button>
         </form>
     </div>

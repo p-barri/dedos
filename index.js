@@ -59,12 +59,13 @@ io.on('connection', function(socket){
         });
     });
 
-    socket.on('start play', function(data){
+    socket.on('start game', function(data){
         socket.number = data.number;
-        socket.to(getGameName(socket.gameId)).emit('start game');
+        console.log(getGameName(socket));
+        io.in(getGameName(socket)).emit('start game');
     });
 });
 
 http.listen(8000, function(){
-    console.log('listening on *:3000');
+    console.log('listening on *:8000');
 });

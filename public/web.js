@@ -35,7 +35,7 @@ $(function () {
             $('#loginInput').hide();
             $('#userBlock').css('display', '');
         }
-    }
+    };
 
     joinGame = function() {
         var usernameInput = $('#usernameJoinInput').val();
