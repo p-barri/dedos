@@ -45,14 +45,23 @@ io.on('connection', function(socket){
             gameId: socket.gameId,
         });
     });
-    socket.on('start room', function(data){
-        var clients = io.sockets.clients(getGameName(data));
+    socket.on('start room', function(){
+        var clients = io.nsps['/'].adapter.rooms[getGameName(socket)].sockets;
+        socket.roundNumber = 1;
+        socket.clients = clients;
+        //Get first client
+        var clientId = Object.keys(socket.clients)[0];
+        var leaderUsername = (io.sockets.sockets[clientId].username);
 
-        socket.broadcast.to(getGameName(data)).emit('start room', data);
-        socket.username = data.username;
-        socket.gamename = data.gamename;
-        socket.gameId = parseInt(Math.random() * 10000);
-        addedUser = true;
+        socket.broadcast.to(getGameName(socket)).emit('start room', {
+            leaderUsername: leaderUsername,
+            roundNumber: 1
+        });
+    });
+
+    socket.on('start play', function(data){
+        socket.number = data.number;
+        socket.to(getGameName(socket.gameId)).emit('start game');
     });
 });
 
