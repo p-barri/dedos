@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+<head>
+    <title>Choteame.. no te cagues</title>
+    <link href="style.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="container">
+    <div class="login page" id="loginInput">
+        <div class="form">
+            <h3 class="title">What's your nickname?</h3>
+            <input id="usernameInput" type="text" maxlength="14" />
+            <button onclick="setUsername();">Send</button>
+        </div>
+    </div>
+    <div style="display: none;" id="userBlock">
+        <img src="images/Recurso%202.png" alt="Smiley face" height="100%" width="42">
+        <h2 id="usernameLogged"></h2>
+    </div>
+    <div class="chat">
+        <ul id="messages"></ul>
+        <form action="">
+            <input id="m" autocomplete="off" />
+            <button disabled id="chat-send">Send</button>
+        </form>
+    </div>
+</div>
+<script src="/socket.io/socket.io.js"></script>
+<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+<script src="web.js"></script>
+</body>
+</html>
