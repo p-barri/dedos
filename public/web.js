@@ -51,9 +51,10 @@ $(function () {
         }
     };
 
-    startGame = function () {
+    startRoom = function () {
+
         if (username && gameId) {
-            socket.emit('start game', {username: username, gameId: gameId});
+            socket.emit('start room');
         }
     }
 });

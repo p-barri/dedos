@@ -45,10 +45,10 @@ io.on('connection', function(socket){
             gameId: socket.gameId,
         });
     });
-    socket.on('start game', function(data){
-        var clients = io.sockets.clients('game '+data.gameId);
+    socket.on('start room', function(data){
+        var clients = io.sockets.clients(getGameName(data));
 
-        socket.broadcast.to('game '+data.gameId).emit('game starting', data);
+        socket.broadcast.to(getGameName(data)).emit('start room', data);
         socket.username = data.username;
         socket.gamename = data.gamename;
         socket.gameId = parseInt(Math.random() * 10000);
