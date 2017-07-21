@@ -34,12 +34,12 @@ $(function () {
     }
     joinGame = function() {
         var usernameInput = $('#usernameInput').val();
-        var gamenameInput = $('#gamenameInput').val();
+        var gameidInput = $('#gameidInput').val();
         username = usernameInput.trim();
-        gamename = gamenameInput.trim();
+        gameId = gameidInput.trim();
 
-        if (username) {
-            socket.emit('new game', {username: username, gamename: gamename});
+        if (username && gameId) {
+            socket.emit('new game', {username: username, gameId: gameId});
             $('#chat-send').removeAttr('disabled');
             $('#loginInput').hide();
             $('#userBlock').css('display', '');
