@@ -45,7 +45,7 @@ io.on('connection', function(socket){
             gameId: socket.gameId,
         });
     });
-    socket.on('start game', function(data){
+    socket.on('start aaa', function(data){
         var clients = io.sockets.clients('game '+data.gameId);
 
         socket.broadcast.to('game '+data.gameId).emit('game starting', data);
@@ -55,9 +55,10 @@ io.on('connection', function(socket){
         addedUser = true;
     });
 
-    socket.on('start play', function(data){
+    socket.on('start game', function(data){
         socket.number = data.number;
-        socket.to(getGameName(socket.gameId)).emit('start game');
+        console.log(getGameName(socket));
+        io.in(getGameName(socket)).emit('start game');
     });
 });
 
