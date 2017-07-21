@@ -11,7 +11,9 @@ app.get('/', function(req, res){
 
 io.on('connection', function(socket){
     var addedUser = false;
-
+    function getGameName(data){
+        return 'game '+data.gameId;
+    }
     console.log('a user connected');
     socket.on('disconnect', function(){
         console.log('user disconnected');
@@ -21,8 +23,14 @@ io.on('connection', function(socket){
     });
 
     socket.on('join game', function(data){
-        socket.join('game '+data.gameId);
-        socket.broadcast.to('game '+data.gameId).emit('new user', data);
+        socket.username = data.username;
+        socket.gameId = data.gameId;
+        socket.join(getGameName(data));
+        socket.emit('join game', {
+            username: socket.username,
+            gameId: socket.gameId,
+        });
+        socket.broadcast.to(getGameName(data)).emit('new user', data);
     });
     socket.on('new game', function(data){
         if (addedUser) return;
@@ -30,11 +38,11 @@ io.on('connection', function(socket){
         socket.gamename = data.gamename;
         socket.gameId = parseInt(Math.random() * 10000);
         addedUser = true;
-        socket.broadcast.to('game '+data.gameId).emit('new user',data);
+        socket.join(getGameName(socket));
         socket.emit('new game', {
-           username: socket.username,
-           gamename: socket.gamename,
-           gameId: socket.gameId,
+            username: socket.username,
+            gamename: socket.gamename,
+            gameId: socket.gameId,
         });
     });
     socket.on('start game', function(data){

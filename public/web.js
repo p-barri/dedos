@@ -14,6 +14,10 @@ $(function () {
         $('#gameId').append(data.gameId);
         $('#gameName').append(data.gameName);
     });
+    socket.on('join game', function (data) {
+        $('#usernameLogged').append(data.username);
+        $('#gameId').append(data.gameId);
+    });
     socket.on('new user', function (data) {
         $('#users').append("<tr><td>"+data.username+"</td></tr>")
     });
@@ -31,7 +35,8 @@ $(function () {
             $('#loginInput').hide();
             $('#userBlock').css('display', '');
         }
-    };
+    }
+
     joinGame = function() {
         var usernameInput = $('#usernameInput').val();
         var gameidInput = $('#gameidInput').val();
