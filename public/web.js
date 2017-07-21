@@ -38,13 +38,13 @@ $(function () {
     }
 
     joinGame = function() {
-        var usernameInput = $('#usernameInput').val();
+        var usernameInput = $('#usernameJoinInput').val();
         var gameidInput = $('#gameidInput').val();
         username = usernameInput.trim();
         gameId = gameidInput.trim();
 
         if (username && gameId) {
-            socket.emit('new game', {username: username, gameId: gameId});
+            socket.emit('join game', {username: username, gameId: gameId});
             $('#chat-send').removeAttr('disabled');
             $('#loginInput').hide();
             $('#userBlock').css('display', '');
@@ -52,8 +52,9 @@ $(function () {
     };
 
     startGame = function () {
-        if (username && gameId) {
-            socket.emit('start game', {username: username, gameId: gameId});
+        var number = $('#numberInput').val();
+        if (number) {
+            socket.emit('start game', {number: number});
         }
     }
 });

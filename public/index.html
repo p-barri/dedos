@@ -29,7 +29,7 @@
             <input id="gameidInput" type="text" maxlength="14" />
         </div>
         <div>
-            <button onclick="joinGame();">Send</button>
+            <button onclick="joinGame();">Join game</button>
         </div>
     </div>
     <div style="display: none;" id="userBlock">
@@ -55,6 +55,7 @@
             <button disabled id="chat-send">Send</button>
         </form>
     </div>
+    <button onclick="startGame();">start game</button>
 </div>
 <script src="/socket.io/socket.io.js"></script>
 <script src="https://code.jquery.com/jquery-1.11.1.js"></script>

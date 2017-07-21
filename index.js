@@ -54,6 +54,11 @@ io.on('connection', function(socket){
         socket.gameId = parseInt(Math.random() * 10000);
         addedUser = true;
     });
+
+    socket.on('start play', function(data){
+        socket.number = data.number;
+        socket.to(getGameName(socket.gameId)).emit('start game');
+    });
 });
 
 http.listen(8000, function(){
