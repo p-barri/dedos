@@ -19,19 +19,35 @@ io.on('connection', function(socket){
     socket.on('chat message', function(msg){
         io.emit('chat message', msg);
     });
-    socket.on('new user', function(username){
+
+    socket.on('join game', function(data){
+        socket.join('game '+data.gameId);
+        socket.broadcast.to('game '+data.gameId).emit('new user', data);
+    });
+    socket.on('new game', function(data){
         if (addedUser) return;
-
-        socket.username = username;
-
+        socket.username = data.username;
+        socket.gamename = data.gamename;
+        socket.gameId = parseInt(Math.random() * 10000);
         addedUser = true;
-
-        io.emit('new user', {
-            username: socket.username
+        socket.broadcast.to('game '+data.gameId).emit('new user',data);
+        socket.emit('new game', {
+           username: socket.username,
+           gamename: socket.gamename,
+           gameId: socket.gameId,
         });
+    });
+    socket.on('start game', function(data){
+        var clients = io.sockets.clients('game '+data.gameId);
+
+        socket.broadcast.to('game '+data.gameId).emit('game starting', data);
+        socket.username = data.username;
+        socket.gamename = data.gamename;
+        socket.gameId = parseInt(Math.random() * 10000);
+        addedUser = true;
     });
 });
 
-http.listen(8000,'192.168.1.17', function(){
+http.listen(8000, function(){
     console.log('listening on *:3000');
 });
