@@ -2,6 +2,7 @@ var express = require('express');
 var app = express();
 var http = require('http').createServer(app);
 var io = require('socket.io')(http);
+var resultados = {};
 
 app.use(express.static(__dirname + '/public'));
 
@@ -39,6 +40,7 @@ io.on('connection', function(socket){
         socket.gameId = parseInt(Math.random() * 10000);
         addedUser = true;
         socket.join(getGameName(socket));
+        resultados[getGameName(socket)] = {};
         socket.emit('new game', {
             username: socket.username,
             gamename: socket.gamename,
@@ -53,16 +55,25 @@ io.on('connection', function(socket){
         var clientId = Object.keys(socket.clients)[0];
         var leaderUsername = (io.sockets.sockets[clientId].username);
 
-        socket.broadcast.to(getGameName(socket)).emit('start room', {
+        io.in(getGameName(socket)).emit('start room', {
             leaderUsername: leaderUsername,
             roundNumber: 1
         });
     });
 
     socket.on('start game', function(data){
+        resultados[getGameName(socket)].touch = 0;
         socket.number = data.number;
-        console.log(getGameName(socket));
         io.in(getGameName(socket)).emit('start game');
+    });
+
+    socket.on('finish game', function(data){
+        if(data.result){
+            resultados[getGameName(socket)].touch = resultados[getGameName(socket)].touch + 1
+        }
+        io.in(getGameName(socket)).emit('finish game', {
+            resultados: resultados
+        });
     });
 });
 

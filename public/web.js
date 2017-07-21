@@ -10,6 +10,8 @@ $(function () {
     });
 
     socket.on('new game', function (data) {
+        $('#start-room').show();
+        $('#start-room').find("button").removeAttr("disabled");
         $('#usernameLogged').append(data.username);
         $('#gameId').append(data.gameId);
         $('#gameName').append(data.gameName);
@@ -20,6 +22,9 @@ $(function () {
     });
     socket.on('new user', function (data) {
         $('#users').append("<tr><td>"+data.username+"</td></tr>")
+    });
+    socket.on('finish game', function (data) {
+        socket.emit('finish game');
     });
 
 
